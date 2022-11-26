@@ -40,5 +40,5 @@ La carpeta del groundTruth:
 ```
 y instalar la aplicacion: https://github.com/Visceral-Project/EvaluateSegmentation. En la carpeta /buids estan los .zip para descargarla. 
 
-En el codigo - estan las lineas para correr todos los volumenes y obtener la prediccion para el conjunto de Test, pero seri necesario que cambiarn los paths a donde se encuentra el ejecutable de la aplicacion y las carpetas de los volumenes. 
+En el codigo FetaMetrics estan las lineas para correr todos los volumenes y obtener la prediccion para el conjunto de Test, pero seri necesario que cambiarn los paths a donde se encuentra el ejecutable de la aplicacion y las carpetas de los volumenes. 
 
