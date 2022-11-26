@@ -239,8 +239,8 @@ def mask_to_image(mask: np.ndarray):
 
 
 if __name__ == '__main__':
-    modelAttentioFest='/home/mfpenuela/FetaProjectAML/checkpoint/checkpoint_Attention-UNet.pth'
-    modelAttentionBase='/home/mfpenuela/Attention-UNet/checkpoints/sizekl25/checkpoint_epoch200.pth'
+    modelAttentioFest='/checkpoint/checkpoint_Attention-UNet.pth'
+    modelAttentionBase='/checkpoint/checkpoint_Attention-UNetBase.pth.'
     args = get_args()
     in_files = args.input
     #out_files = get_output_filenames(args)
@@ -267,8 +267,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/home/mfpenuela/FetaProjectAML/Test/images/'
-                out_filename='/home/mfpenuela/FetaProjectAML/Results/testImagesBase/'
+                filename='/Test/images/'
+                out_filename='/Results/testImagesBase/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -305,8 +305,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/home/mfpenuela/FetaProjectAML/Test/images/'
-                out_filename='/home/mfpenuela/FetaProjectAML/Results/testImagesAttention/'
+                filename='/Test/images/'
+                out_filename='/Results/testImagesAttention/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -348,8 +348,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/home/mfpenuela/FetaProjectAML/Test/images/'
-                out_filename='/home/mfpenuela/FetaProjectAML/Results/DemoImagesBase/'
+                filename='/Test/images/'
+                out_filename='/Results/DemoImagesBase/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -388,8 +388,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/home/mfpenuela/FetaProjectAML/Test/images/'
-                out_filename='/home/mfpenuela/FetaProjectAML/Results/DemoImagesAttention/'
+                filename='/Test/images/'
+                out_filename='/Results/DemoImagesAttention/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
