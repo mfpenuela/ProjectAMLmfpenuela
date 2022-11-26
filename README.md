@@ -20,11 +20,11 @@ pip install -r requirements.txt
 ```
 4. Correr el archivo main.py donde el argumento --mode puede ser 'test' o 'demo'
 ```bash
-ej: python3 test.py --mode 'test'
+ej: python3 main.py --mode 'test'
 ```
 El demo tiene el parametro --img que puede ser el nombre del paciente y tomar los valores: 'sub-016', 'sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064'
 ```bash
-ej: python3 test.py --mode 'demo' --img 'sub-023'
+ej: python3 main.py --mode 'demo' --img 'sub-023'
 ```
 
 Los resultados del test no son iguales a los que aparecen en el informe, porque para sacar las metricas utilice la implemetacion oficial del Challenge de FeTa, pero esta es una aplicacion que corre por consola y solo tiene build para windows y ubuntu. No puede replicar la implementacion que ellos usan en el servidor porque definen predicciones suaves, entonces utilice un dice normal. 
