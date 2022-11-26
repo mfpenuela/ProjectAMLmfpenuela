@@ -38,6 +38,7 @@ def diceDemo(img):
     dice=0
     base='./Results/DemoImagesBase/'
     Attention='./Results/DemoImagesAttention/'
+    Unet = './Results/DemoImagesUnet/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -81,11 +82,34 @@ def diceDemo(img):
 
         dicef=dice/10
         print('Attention Fest DSC:'+str(dice))
+    dice=0
+    
+    for i in range(len(names)):
+        vol=np.zeros((128,128,128))
+        volgt = np.zeros((128, 128, 128))
+        c = 0
+        for j in range(128):
+            a=io.imread(Unet+names[i]+'-'+str(c)+'.png')
+            vol[:,:,j]=a
+
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = seg.resize((128, 128))
+            seg = np.asarray(seg)
+            volgt[:, :, j] = seg
+            c = c + 2
+
+        d, l = dice_coef_multilabel(vol, volgt, 8)
+
+        dice = dice + d
+
+        dicef=dice/10
+        print('Unet Fest DSC:'+str(dice))
 def diceTest():
     names=['sub-016','sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064']
     dice=0
     base='./Results/testImagesBase/'
     Attention='./Results/testImagesAttention/'
+    Unet='./Results/testImagesUnet/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -130,6 +154,32 @@ def diceTest():
 
     dicef=dice/10
     print('Attention Fest DSC:'+str(dicef))
+    dicef=dice/10
+
+
+    
+    dice=0
+    
+    for i in range(len(names)):
+        vol=np.zeros((128,128,128))
+        volgt = np.zeros((128, 128, 128))
+        c = 0
+        for j in range(128):
+            a=io.imread(Unet+names[i]+'-'+str(c)+'.png')
+            vol[:,:,j]=a
+
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = seg.resize((128, 128))
+            seg = np.asarray(seg)
+            volgt[:, :, j] = seg
+            c = c + 2
+
+        d, l = dice_coef_multilabel(vol, volgt, 8)
+
+        dice = dice + d
+
+    dicef=dice/10
+    print('Unet Fest DSC:'+str(dicef))
 
 def guardarTest():
     base='./Results/testVolsBase/'
@@ -241,11 +291,50 @@ def mask_to_image(mask: np.ndarray):
 if __name__ == '__main__':
     modelAttentioFest='./checkpoint/checkpoint_Attention-UNet.pth'
     modelAttentionBase='./checkpoint/checkpoint_Attention-UNetBase.pth'
+    modelUNet='./checkpoint/checkpoint_UNet.pth'
     args = get_args()
     in_files = args.input
     #out_files = get_output_filenames(args)
 
     if args.mode=='test':
+        net = UNet(n_channels=1, n_classes=8, bilinear=args.bilinear)
+
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        #logging.info(f'Loading model {args.model}')
+        logging.info(f'Using device {device}')
+
+        net.to(device=device)
+        net.load_state_dict(torch.load(modelUNet, map_location=device))
+
+        logging.info('Model loaded!')
+        names=['sub-016-','sub-023-','sub-024-','sub-027-','sub-028-','sub-032-','sub-035-','sub-036-','sub-059-','sub-064-']
+        edad=[23.3,23.7,30.4,26.5,31.1,32.3,38.3,22.7,34.8,27.8]
+    #names=['sub-001-','sub-005-','sub-020-','sub-029-','sub-037-','sub-038-','sub-052-','sub-070-','sub-075-','sub-077-']
+    #edad=[27.9,22.6,25.8,32.5,23.4,26.9,21.2,20.1,29.0,26.9]
+
+    
+        print('Unet test...')
+        for j in range (len(names)):
+
+            for i in range(256):
+            #logging.info(f'\nPredicting image {filename} ...')
+                filename='./Test/images/'
+                out_filename='./Results/testImagesUnet/'
+                img = Image.open(filename+names[j]+str(i)+'.png')
+
+                mask = predict_img(net=net,
+                                full_img=img,
+                                scale_factor=args.scale,
+                                out_threshold=args.mask_threshold,
+                                device=device,
+                                edad=edad[j])
+            #print(mask.shape,edad[j],names[j])
+
+                if not args.no_save:
+
+                    result = mask_to_image(mask)
+                    result.save(out_filename+names[j]+str(i)+'.png')
+                    logging.info(f'Mask saved to {out_filename}')
         net = AttentionUNetBase(img_ch=1, output_ch=8)
 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -284,6 +373,7 @@ if __name__ == '__main__':
                     result = mask_to_image(mask)
                     result.save(out_filename+names[j]+str(i)+'.png')
                     logging.info(f'Mask saved to {out_filename}')
+        
 
         net = AttentionUNet(img_ch=1, output_ch=8)
 
@@ -325,6 +415,47 @@ if __name__ == '__main__':
         diceTest()
         guardarTest()
     if args.mode=='demo':
+        net = UNet(n_channels=1, n_classes=8, bilinear=args.bilinear)
+
+
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        #logging.info(f'Loading model {args.model}')
+        logging.info(f'Using device {device}')
+
+        net.to(device=device)
+        net.load_state_dict(torch.load(modelUNet, map_location=device))
+
+        logging.info('Model loaded!')
+        names=['sub-016-','sub-023-','sub-024-','sub-027-','sub-028-','sub-032-','sub-035-','sub-036-','sub-059-','sub-064-']
+        edad=[23.3,23.7,30.4,26.5,31.1,32.3,38.3,22.7,34.8,27.8]
+    #names=['sub-001-','sub-005-','sub-020-','sub-029-','sub-037-','sub-038-','sub-052-','sub-070-','sub-075-','sub-077-']
+    #edad=[27.9,22.6,25.8,32.5,23.4,26.9,21.2,20.1,29.0,26.9]
+
+    
+        print('UNettest...')
+        for j in range (len(names)):
+            if args.img+'-'!=names[j]:
+                continue 
+
+            for i in range(256):
+            #logging.info(f'\nPredicting image {filename} ...')
+                filename='./Test/images/'
+                out_filename='./Results/DemoImagesBase/'
+                img = Image.open(filename+names[j]+str(i)+'.png')
+
+                mask = predict_img(net=net,
+                                full_img=img,
+                                scale_factor=args.scale,
+                                out_threshold=args.mask_threshold,
+                                device=device,
+                                edad=edad[j])
+            #print(mask.shape,edad[j],names[j])
+
+                if not args.no_save:
+
+                    result = mask_to_image(mask)
+                    result.save(out_filename+names[j]+str(i)+'.png')
+                    logging.info(f'Mask saved to {out_filename}')
         net = AttentionUNetBase(img_ch=1, output_ch=8)
 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
