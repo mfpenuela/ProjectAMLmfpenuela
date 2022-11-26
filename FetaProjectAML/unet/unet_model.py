@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import nibabel as nib 
+from .unet_parts import *
 
 def PositionalEncoding(size, value):
     d=1
@@ -347,7 +348,7 @@ class UNet(nn.Module):
         self.up4 = Up(128, 64, bilinear)
         self.outc = OutConv(64, n_classes)
 
-    def forward(self, x):
+    def forward(self, x,edad):
         #print(edad)
         x1 = self.inc(x)
         x2 = self.down1(x1)
@@ -445,4 +446,6 @@ class UNetBase(nn.Module):
         x = self.up4(x, x1)
         logits = self.outc(x)
         return logits
+
+
 
