@@ -36,8 +36,8 @@ def dice_coef_multilabel(y_true, y_pred, numLabels):
 def diceDemo(img):
     names=[img]
     dice=0
-    base='/Results/DemoImagesBase/'
-    Attention='/Results/DemoImagesAttention/'
+    base='./Results/DemoImagesBase/'
+    Attention='./Results/DemoImagesAttention/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -47,7 +47,7 @@ def diceDemo(img):
             a=io.imread(base+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -69,7 +69,7 @@ def diceDemo(img):
             a=io.imread(Attention+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -84,8 +84,8 @@ def diceDemo(img):
 def diceTest():
     names=['sub-016','sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064']
     dice=0
-    base='/Results/testImagesBase/'
-    Attention='/Results/testImagesAttention/'
+    base='./Results/testImagesBase/'
+    Attention='./Results/testImagesAttention/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -95,7 +95,7 @@ def diceTest():
             a=io.imread(base+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -118,7 +118,7 @@ def diceTest():
             a=io.imread(Attention+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('./Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -132,10 +132,10 @@ def diceTest():
     print('Attention Fest DSC:'+str(dicef))
 
 def guardarTest():
-    base='/Results/testVolsBase/'
-    Attention='/Results/testVolsAttention/'
-    baseR='/Results/testImagesBase/'
-    AttentionR='/Results/testImagesAttention/'
+    base='./Results/testVolsBase/'
+    Attention='./Results/testVolsAttention/'
+    baseR='./Results/testImagesBase/'
+    AttentionR='./Results/testImagesAttention/'
 
     
     names=['sub-016', 'sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064']
@@ -239,8 +239,8 @@ def mask_to_image(mask: np.ndarray):
 
 
 if __name__ == '__main__':
-    modelAttentioFest='/checkpoint/checkpoint_Attention-UNet.pth'
-    modelAttentionBase='/checkpoint/checkpoint_Attention-UNetBase.pth.'
+    modelAttentioFest='./checkpoint/checkpoint_Attention-UNet.pth'
+    modelAttentionBase='./checkpoint/checkpoint_Attention-UNetBase.pth'
     args = get_args()
     in_files = args.input
     #out_files = get_output_filenames(args)
@@ -267,8 +267,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/Test/images/'
-                out_filename='/Results/testImagesBase/'
+                filename='./Test/images/'
+                out_filename='./Results/testImagesBase/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -305,8 +305,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/Test/images/'
-                out_filename='/Results/testImagesAttention/'
+                filename='./Test/images/'
+                out_filename='./Results/testImagesAttention/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -348,8 +348,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/Test/images/'
-                out_filename='/Results/DemoImagesBase/'
+                filename='./Test/images/'
+                out_filename='./Results/DemoImagesBase/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -388,8 +388,8 @@ if __name__ == '__main__':
 
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
-                filename='/Test/images/'
-                out_filename='/Results/DemoImagesAttention/'
+                filename='./Test/images/'
+                out_filename='./Results/DemoImagesAttention/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
@@ -406,5 +406,3 @@ if __name__ == '__main__':
                     result.save(out_filename+names[j]+str(i)+'.png')
                     logging.info(f'Mask saved to {out_filename}')
         diceDemo(args.img)
-
-
