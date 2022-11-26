@@ -36,8 +36,8 @@ def dice_coef_multilabel(y_true, y_pred, numLabels):
 def diceDemo(img):
     names=[img]
     dice=0
-    base='/home/mfpenuela/FetaProjectAML/Results/DemoImagesBase/'
-    Attention='/home/mfpenuela/FetaProjectAML/Results/DemoImagesAttention/'
+    base='/Results/DemoImagesBase/'
+    Attention='/Results/DemoImagesAttention/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -47,7 +47,7 @@ def diceDemo(img):
             a=io.imread(base+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/home/mfpenuela/FetaProjectAML/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -69,7 +69,7 @@ def diceDemo(img):
             a=io.imread(Attention+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/home/mfpenuela/FetaProjectAML/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -84,8 +84,8 @@ def diceDemo(img):
 def diceTest():
     names=['sub-016','sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064']
     dice=0
-    base='/home/mfpenuela/FetaProjectAML/Results/testImagesBase/'
-    Attention='/home/mfpenuela/FetaProjectAML/Results/testImagesAttention/'
+    base='/Results/testImagesBase/'
+    Attention='/Results/testImagesAttention/'
 
     for i in range(len(names)):
         vol=np.zeros((128,128,128))
@@ -95,7 +95,7 @@ def diceTest():
             a=io.imread(base+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/home/mfpenuela/FetaProjectAML/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -118,7 +118,7 @@ def diceTest():
             a=io.imread(Attention+names[i]+'-'+str(c)+'.png')
             vol[:,:,j]=a
 
-            seg = Image.open('/home/mfpenuela/FetaProjectAML/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
+            seg = Image.open('/Test/masksImages/' + names[i] + '-' + str(c) + '_mask.png')
             seg = seg.resize((128, 128))
             seg = np.asarray(seg)
             volgt[:, :, j] = seg
@@ -132,10 +132,10 @@ def diceTest():
     print('Attention Fest DSC:'+str(dicef))
 
 def guardarTest():
-    base='/home/mfpenuela/FetaProjectAML/Results/testVolsBase/'
-    Attention='/home/mfpenuela/FetaProjectAML/Results/testVolsAttention/'
-    baseR='/home/mfpenuela/FetaProjectAML/Results/testImagesBase/'
-    AttentionR='/home/mfpenuela/FetaProjectAML/Results/testImagesAttention/'
+    base='/Results/testVolsBase/'
+    Attention='/Results/testVolsAttention/'
+    baseR='/Results/testImagesBase/'
+    AttentionR='/Results/testImagesAttention/'
 
     
     names=['sub-016', 'sub-023', 'sub-024','sub-027','sub-028','sub-032','sub-035','sub-036','sub-059','sub-064']
