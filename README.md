@@ -6,7 +6,7 @@
 /home/mfpenuela/FetaProjectAML/Test
 ```
 
-o pueden pueden copiar toda la carpeta de una vez:
+o pueden copiar toda la carpeta de una vez:
 ```bash
 /home/mfpenuela/FetaProjectAML
 ```
