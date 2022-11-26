@@ -440,7 +440,7 @@ if __name__ == '__main__':
             for i in range(256):
             #logging.info(f'\nPredicting image {filename} ...')
                 filename='./Test/images/'
-                out_filename='./Results/DemoImagesBase/'
+                out_filename='./Results/DemoImagesUnet/'
                 img = Image.open(filename+names[j]+str(i)+'.png')
 
                 mask = predict_img(net=net,
