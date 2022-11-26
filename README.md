@@ -1,8 +1,8 @@
 # ProjectAMLmfpenuela
 
-1. Descargar la carpeta FetaProjectAML y copiar las carpetas con las imagenes de Test y los checkpoints:
+1. Descargar la carpeta FetaProjectAML, y copiar adentro de la carpeta las carpetas con las imagenes de Test y los checkpoints:
 ```bash
-/home/mfpenuela/FetaProjectAML/checkpoint
+cp -R /home/mfpenuela/FetaProjectAML/checkpoint ./FetaprojectAML/
 /home/mfpenuela/FetaProjectAML/Test
 ```
 
